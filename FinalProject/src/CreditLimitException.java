@@ -1,23 +1,12 @@
-
-import java.io.*;
-import java.util.*;
-
 /**
- * 
+ * Исключение: студент превысил лимит кредитов (21).
  */
-public class CreditLimitException {
+public class CreditLimitException extends RuntimeException {
 
-    /**
-     * Default constructor
-     */
-    public CreditLimitException() {
+    public CreditLimitException(Student student, Course course) {
+        super(String.format(
+                "'%s' cannot register for '%s': credit limit exceeded (current: %d, adding: %d, max: 21)",
+                student.getFullName(), course.getName(),
+                student.getCredits(), course.getCredits()));
     }
-
-    /**
-     * @param s
-     */
-    public CreditLimitException(void s) {
-        // TODO implement here
-    }
-
 }

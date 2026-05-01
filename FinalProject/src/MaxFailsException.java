@@ -1,23 +1,11 @@
-
-import java.io.*;
-import java.util.*;
-
 /**
- * 
+ * Исключение: студент превысил допустимое количество провальных курсов (3).
  */
-public class MaxFailsException {
+public class MaxFailsException extends RuntimeException {
 
-    /**
-     * Default constructor
-     */
-    public MaxFailsException() {
+    public MaxFailsException(Student student) {
+        super(String.format(
+                "Student '%s' has exceeded the maximum number of failed courses (3). Academic dismissal required.",
+                student.getFullName()));
     }
-
-    /**
-     * @param s
-     */
-    public MaxFailsException(void s) {
-        // TODO implement here
-    }
-
 }

@@ -1,82 +1,72 @@
-
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
- * 
+ * Новость университета.
  */
-public class News {
+public class News implements Serializable {
 
-    /**
-     * Default constructor
-     */
-    public News() {
+    private static final long serialVersionUID = 1L;
+
+    private String   title;
+    private String   content;
+    private Employee author;
+    private Date     date;
+    private boolean  published;
+    private String   comment;
+
+    public News() {}
+
+    public News(String title, String content, Employee author) {
+        this.title   = title;
+        this.content = content;
+        this.author  = author;
+        this.date    = new Date();
+        this.published = false;
+        this.comment = "";
     }
 
+    // ─── Методы ──────────────────────────────────────────────────────────────
 
-
-    /**
-     * @return
-     */
-    private String title() {
-        // TODO implement here
-        return "";
-    }
-
-    /**
-     * @return
-     */
-    private String content() {
-        // TODO implement here
-        return "";
-    }
-
-    /**
-     * @return
-     */
-    private Employee author() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    private Date date() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
     public void publish() {
-        // TODO implement here
-        return null;
+        this.published = true;
+        this.date = new Date();
+        System.out.println("News published: " + title);
     }
 
-    /**
-     * @return
-     */
-    public void edit() {
-        // TODO implement here
-        return null;
+    public void edit(String newContent) {
+        this.content = newContent;
+        this.date    = new Date();
+        System.out.println("News updated: " + title);
     }
 
-    /**
-     * @return
-     */
+    /** Удалить (снять с публикации). */
     public void delete() {
-        // TODO implement here
-        return null;
+        this.published = false;
+        System.out.println("News unpublished: " + title);
     }
 
-    /**
-     * @return
-     */
-    public String comment() {
-        // TODO implement here
-        return "";
-    }
+    public String comment() { return comment; }
+    public void   setComment(String c) { this.comment = c; }
 
+    // ─── Геттеры ─────────────────────────────────────────────────────────────
+
+    public String   getTitle()     { return title; }
+    public String   getContent()   { return content; }
+    public Employee getAuthor()    { return author; }
+    public Date     getDate()      { return date; }
+    public boolean  isPublished()  { return published; }
+
+    public void setTitle(String t)   { this.title = t; }
+    public void setContent(String c) { this.content = c; }
+
+    @Override
+    public String toString() {
+        String d = date != null ? new SimpleDateFormat("dd.MM.yyyy").format(date) : "?";
+        return String.format("[News] \"%s\" | %s | by %s | %s",
+                title, d,
+                author != null ? author.getFullName() : "?",
+                published ? "PUBLISHED" : "DRAFT");
+    }
 }

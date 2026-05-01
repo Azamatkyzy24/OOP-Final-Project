@@ -1,31 +1,11 @@
-
-import java.io.*;
-import java.util.*;
-
 /**
- * 
+ * Исключение: h-index исследователя ниже минимального (3) для назначения научруком.
  */
-public class LowHIndexException {
+public class LowHIndexException extends RuntimeException {
 
-    /**
-     * Default constructor
-     */
-    public LowHIndexException() {
+    public LowHIndexException(ResearcherDecorator researcher) {
+        super(String.format(
+                "Cannot assign '%s' as supervisor: h-index is %d (minimum required: 3)",
+                researcher.getOwnerName(), researcher.getHIndex()));
     }
-
-    /**
-     * @param r
-     */
-    public LowHIndexException(void r) {
-        // TODO implement here
-    }
-
-    /**
-     * @return
-     */
-    public String getMessage() {
-        // TODO implement here
-        return "";
-    }
-
 }

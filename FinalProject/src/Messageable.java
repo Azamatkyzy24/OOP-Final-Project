@@ -1,21 +1,17 @@
-
-import java.io.*;
-import java.util.*;
+import java.util.List;
 
 /**
- * 
+ * Интерфейс для объектов, поддерживающих обмен сообщениями.
  */
 public interface Messageable {
 
     /**
-     * @param to 
-     * @param msg
+     * Отправить сообщение сотруднику.
      */
-    public void sendMessage(Employee to, String msg);
+    void sendMessage(Employee to, String msg);
 
     /**
-     * @return
+     * Получить список входящих сообщений.
      */
-    public List getMessages();
-
+    List<Message> getMessages();
 }

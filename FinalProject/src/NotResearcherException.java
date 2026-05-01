@@ -1,31 +1,11 @@
-
-import java.io.*;
-import java.util.*;
-
 /**
- * 
+ * Исключение: пользователь не является исследователем.
  */
-public class NotResearcherException {
+public class NotResearcherException extends RuntimeException {
 
-    /**
-     * Default constructor
-     */
-    public NotResearcherException() {
+    public NotResearcherException(User user) {
+        super(String.format(
+                "'%s' is not a Researcher and cannot join a ResearchProject",
+                user.getFullName()));
     }
-
-    /**
-     * @param u
-     */
-    public NotResearcherException(void u) {
-        // TODO implement here
-    }
-
-    /**
-     * @return
-     */
-    public String getMessage() {
-        // TODO implement here
-        return "";
-    }
-
 }

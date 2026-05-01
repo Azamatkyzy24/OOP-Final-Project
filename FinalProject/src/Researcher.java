@@ -1,32 +1,28 @@
-
-import java.io.*;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
 
 /**
- * 
+ * Интерфейс исследователя (используется Decorator pattern).
  */
 public interface Researcher {
 
-
+    /**
+     * Вывести список статей, отсортированных по компаратору.
+     */
+    void printPapers(Comparator<ResearchPaper> comparator);
 
     /**
-     * @param c
+     * Добавить статью исследователю.
      */
-    public void printPapers(Comparator c);
+    void addPaper(ResearchPaper p);
 
     /**
-     * @param p
+     * Получить h-index исследователя.
      */
-    public void addPaper(ResearchPaper p);
+    int getHIndex();
 
     /**
-     * @return
+     * Получить список проектов.
      */
-    public int getHIndex();
-
-    /**
-     * @return
-     */
-    public List getProjects();
-
+    List<ResearchProject> getProjects();
 }

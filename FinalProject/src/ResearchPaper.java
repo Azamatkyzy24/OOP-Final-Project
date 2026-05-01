@@ -1,83 +1,69 @@
-
-import java.io.*;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * 
+ * Научная статья / публикация.
+ * Implements Comparable для сортировки по дате.
  */
-public class ResearchPaper {
+public class ResearchPaper implements Comparable<ResearchPaper>, Serializable {
 
-    /**
-     * Default constructor
-     */
-    public ResearchPaper() {
+    private static final long serialVersionUID = 1L;
+
+    private String       title;
+    private List<String> authors;   // имена авторов как строки
+    private Date         date;
+    private int          pages;
+    private int          citations;
+
+    public ResearchPaper() {}
+
+    public ResearchPaper(String title, List<String> authors, Date date, int pages) {
+        this.title     = title;
+        this.authors   = new ArrayList<>(authors);
+        this.date      = date;
+        this.pages     = pages;
+        this.citations = 0;
     }
 
+    // ─── Методы ──────────────────────────────────────────────────────────────
 
-    /**
-     * @return
-     */
-    private String title() {
-        // TODO implement here
-        return "";
+    public void addCitation()  { citations++; }
+    public int  getCitations() { return citations; }
+
+    @Override
+    public int compareTo(ResearchPaper o) {
+        if (this.date == null && o.date == null) return 0;
+        if (this.date == null) return 1;
+        if (o.date    == null) return -1;
+        return this.date.compareTo(o.date);
     }
 
-    /**
-     * @return
-     */
-    private List<String> authors() {
-        // TODO implement here
-        return null;
+    // ─── Геттеры ─────────────────────────────────────────────────────────────
+
+    public String       getTitle()   { return title; }
+    public List<String> getAuthors() { return authors; }
+    public Date         getDate()    { return date; }
+    public int          getPages()   { return pages; }
+
+    public void setTitle(String t)    { this.title = t; }
+    public void setCitations(int c)   { this.citations = c; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ResearchPaper)) return false;
+        return Objects.equals(title, ((ResearchPaper) o).title)
+                && Objects.equals(date, ((ResearchPaper) o).date);
     }
 
-    /**
-     * @return
-     */
-    private Date date() {
-        // TODO implement here
-        return null;
-    }
+    @Override
+    public int hashCode() { return Objects.hash(title, date); }
 
-    /**
-     * @return
-     */
-    private int pages() {
-        // TODO implement here
-        return 0;
-    }
-
-    /**
-     * @param o 
-     * @return
-     */
-    public int compareTo(void o) {
-        // TODO implement here
-        return 0;
-    }
-
-    /**
-     * @param o 
-     * @return
-     */
-    public boolean equals(void o) {
-        // TODO implement here
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    public int hashCode() {
-        // TODO implement here
-        return 0;
-    }
-
-    /**
-     * @return
-     */
+    @Override
     public String toString() {
-        // TODO implement here
-        return "";
+        String d = date != null ? new SimpleDateFormat("yyyy").format(date) : "?";
+        return String.format("\"%s\" (%s) — %s | %d pages | %d citations",
+                title, d, String.join(", ", authors), pages, citations);
     }
-
 }

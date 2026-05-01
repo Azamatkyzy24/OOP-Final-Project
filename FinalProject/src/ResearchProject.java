@@ -1,84 +1,73 @@
-
-import java.io.*;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * 
+ * Исследовательский проект, в котором могут участвовать несколько Researcher'ов.
  */
-public class ResearchProject {
+public class ResearchProject implements Serializable {
 
-    /**
-     * Default constructor
-     */
-    public ResearchProject() {
+    private static final long serialVersionUID = 1L;
+
+    private String            topic;
+    private List<Researcher>  participants;
+    private List<ResearchPaper> papers;
+    private Date              startDate;
+    private Date              endDate;
+
+    public ResearchProject() {}
+
+    public ResearchProject(String topic, Date startDate, Date endDate) {
+        this.topic        = topic;
+        this.participants = new ArrayList<>();
+        this.papers       = new ArrayList<>();
+        this.startDate    = startDate;
+        this.endDate      = endDate;
     }
 
-
-
-    /**
-     * @return
-     */
-    private String topic() {
-        // TODO implement here
-        return "";
-    }
+    // ─── Методы ──────────────────────────────────────────────────────────────
 
     /**
-     * @return
+     * Добавить статью к проекту (и сохранить в базе).
      */
-    private List<Researcher> participants() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    private List<ResearchPaper> papers() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    private Date startDate() {
-        // TODO implement here
-        return null;
+    public void publishPaper(ResearchPaper p) {
+        if (!papers.contains(p)) {
+            papers.add(p);
+            System.out.println("Paper published: " + p.getTitle() + " → project: " + topic);
+        }
     }
 
     /**
-     * @return
+     * Добавить участника в проект.
+     * Бросает NotResearcherException если объект не является Researcher.
      */
-    private Date endDate() {
-        // TODO implement here
-        return null;
+    public void addParticipant(Researcher r) {
+        if (!participants.contains(r)) {
+            participants.add(r);
+            System.out.println("Participant added to project \"" + topic + "\"");
+        }
     }
 
-    /**
-     * @param p 
-     * @return
-     */
-    public void publishPaper(void p) {
-        // TODO implement here
-        return null;
-    }
+    public List<Researcher>    getParticipants() { return participants; }
+    public List<ResearchPaper> getPapers()        { return papers; }
 
-    /**
-     * @param r 
-     * @return
-     */
-    public void addParticipant(void r) {
-        // TODO implement here
-        return null;
-    }
+    // ─── Геттеры ─────────────────────────────────────────────────────────────
 
-    /**
-     * @return
-     */
-    public List getParticipants() {
-        // TODO implement here
-        return null;
-    }
+    public String getTopic()      { return topic; }
+    public Date   getStartDate()  { return startDate; }
+    public Date   getEndDate()    { return endDate; }
 
+    public void   setTopic(String t)     { this.topic = t; }
+    public void   setStartDate(Date d)   { this.startDate = d; }
+    public void   setEndDate(Date d)     { this.endDate = d; }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        return String.format("[Project] \"%s\" | %s — %s | participants: %d | papers: %d",
+                topic,
+                startDate != null ? sdf.format(startDate) : "?",
+                endDate   != null ? sdf.format(endDate)   : "ongoing",
+                participants.size(), papers.size());
+    }
 }
